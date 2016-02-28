@@ -7,21 +7,60 @@
 //
 
 #import "ViewController.h"
+#import "CYTableViewCell.h"
+#import "CYWebImageDefine.h"
 
 @interface ViewController ()
-
+<UITableViewDataSource,UITableViewDelegate>
+@property (nonatomic,strong) NSMutableArray <NSString *>*dataSource;
 @end
 
 @implementation ViewController
 
+- (NSMutableArray *)dataSource{
+    if (!_dataSource) {
+        _dataSource = [NSMutableArray array];
+    }
+    return _dataSource;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    NSArray *array = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"url.plist" ofType:nil]];
+    [self.dataSource addObjectsFromArray:array];
+    [self.tableView reloadData];
     // Do any additional setup after loading the view, typically from a nib.
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma mark - DataSource
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.dataSource.count;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 200;
+}
+- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CYTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CYTableViewCell"];
+    if (!cell) {
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"CYTableViewCell" owner:nil options:nil] lastObject];
+    }
+    [cell.cyImagreView setImageWithURL:self.dataSource[indexPath.row] placeHolder:[UIImage imageNamed:@"菜谱详情加载"]];
+    
+    return cell;
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
 }
 
 @end

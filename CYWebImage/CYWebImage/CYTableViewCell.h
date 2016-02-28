@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  CYTableViewCell.h
 //  CYWebImage
 //
 //  Created by dongzb on 16/2/28.
@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@interface CYTableViewCell : UITableViewCell
+
+@property (weak, nonatomic) IBOutlet UIImageView *cyImagreView;
 
 
 @end
-
