@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "CYTableViewCell.h"
 #import "CYWebImageDefine.h"
+#import "UIImageView+Extension.h"
 
 @interface ViewController ()
 <UITableViewDataSource,UITableViewDelegate>
@@ -43,15 +44,24 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 200;
+    return 100;
 }
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CYTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CYTableViewCell"];
     if (!cell) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"CYTableViewCell" owner:nil options:nil] lastObject];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    [cell.cyImagreView setImageWithURL:self.dataSource[indexPath.row] placeHolder:[UIImage imageNamed:@"菜谱详情加载"]];
+    
+    NSString *image_url = self.dataSource[indexPath.row];
+    
+    NSURL *url = [NSURL URLWithString:image_url];
+    // 设置圆角图片 调用的是 SDWebImage 的下载方法
+    [cell.cyImagreView setRoundImageWithURL:url placeHoder:[UIImage imageNamed:@"huluw.png"]];
+    
+    // 自己写的缓存图片方法 只做学习交流 并不能用到项目里 优化的不够好
+    //    [cell.cyImagreView setImageWithURL:url.absoluteString placeHolder:[UIImage imageNamed:@"huluw"]];
     
     return cell;
 }
