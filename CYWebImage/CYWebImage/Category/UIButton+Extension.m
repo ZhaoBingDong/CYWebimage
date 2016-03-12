@@ -71,7 +71,7 @@ typedef NS_ENUM(NSInteger,CYButtonImageType) {
             if (!image) return;
             @synchronized(self) {
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-                    [[SDImageCache sharedImageCache] removeImageForKey:url.absoluteString];
+                    [[SDImageCache sharedImageCache] removeImageForKey:url.absoluteString fromDisk:NO];
                     UIImage *cirleImage =  [image cirleImage];
                     [[SDImageCache sharedImageCache]storeImage:cirleImage forKey:path toDisk:NO];
                     NSDictionary *params = @{@"image":cirleImage,@"imageType":@(type),@"state":@(state)};
