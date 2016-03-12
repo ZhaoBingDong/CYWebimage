@@ -65,22 +65,24 @@ typedef NS_ENUM(NSInteger,CYButtonImageType) {
     }
     __weak typeof(self)weakSelf = self;
     if (url) {
-        [[SDWebImageManager sharedManager] downloadImageWithURL:url options:SDWebImageRetryFailed|SDWebImageLowPriority progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+        [[SDWebImageManager sharedManager] downloadImageWithURL:url options:0 progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
             __strong typeof(weakSelf)stongSelf = weakSelf;
             if (!finished) return;
             if (!image) return;
             @synchronized(self) {
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                    [[SDImageCache sharedImageCache] removeImageForKey:url.absoluteString];
                     UIImage *cirleImage =  [image cirleImage];
-                    [[SDImageCache sharedImageCache]storeImage:cirleImage forKey:path];
+                    [[SDImageCache sharedImageCache]storeImage:cirleImage forKey:path toDisk:NO];
                     NSDictionary *params = @{@"image":cirleImage,@"imageType":@(type),@"state":@(state)};
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        [stongSelf performSelector:@selector(reloadData:) withObject:params afterDelay:0 inModes:@[NSDefaultRunLoopMode]];
+                        [stongSelf reloadData:params];
                     });
                 });
             }
         }];
     }
+    
 }
 
 - (NSString*)base64String:(NSString*)str{

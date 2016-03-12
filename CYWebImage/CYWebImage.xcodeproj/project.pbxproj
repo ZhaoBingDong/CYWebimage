@@ -378,6 +378,7 @@
 				TargetAttributes = {
 					66EC74521C82E5C200FFA916 = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = 7K8MGZG548;
 					};
 					66EC746B1C82E5C200FFA916 = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -611,6 +612,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = CYWebImage/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.webimage.app.CYWebImage;
@@ -622,6 +624,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = CYWebImage/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.webimage.app.CYWebImage;
