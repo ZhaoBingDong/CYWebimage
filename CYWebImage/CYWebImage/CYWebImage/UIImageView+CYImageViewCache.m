@@ -17,8 +17,8 @@
  *
  *  @param url url
  */
-- (void)setImageWithURL:(NSURL *_Nullable)url {
-    [self setImageWithURL:url option:0 placeHolder:nil completeBlock:nil];
+- (void)cyImageWithURL:(NSURL *_Nullable)url {
+    [self cyImageWithURL:url option:0 placeHolder:nil completeBlock:nil];
 }
 /**
  *  根据一个 url 获取图片
@@ -26,9 +26,9 @@
  *  @param url          url
  *  @param placeHolder  占位图片
  */
-- (void)setImageWithURL:(NSURL *_Nullable)url placeHolder:(UIImage* _Nullable)placeHolder
+- (void)cyImageWithURL:(NSURL *_Nullable)url placeHolder:(UIImage* _Nullable)placeHolder
 {
-    [self setImageWithURL:url option:0 placeHolder:placeHolder completeBlock:nil];
+    [self cyImageWithURL:url option:0 placeHolder:placeHolder completeBlock:nil];
 }
 /**
  *  根据一个 url 获取图片
@@ -37,9 +37,9 @@
  *  @param placeHolder  占位图片
  *  @param complete    回调事件
  */
-- (void)setImageWithURL:(NSURL *_Nullable)url placeHolder:(UIImage* _Nullable)placeHolder completeBlock:(nullable void (^)(UIImage *_Nullable image))complete
+- (void)cyImageWithURL:(NSURL *_Nullable)url placeHolder:(UIImage* _Nullable)placeHolder completeBlock:(nullable void (^)(UIImage *_Nullable image))complete
 {
-    [self setImageWithURL:url option:0 placeHolder:placeHolder completeBlock:complete];
+    [self cyImageWithURL:url option:0 placeHolder:placeHolder completeBlock:complete];
 }
 /**
  *   根据一个 url 来获取图片
@@ -49,8 +49,8 @@
  *  @param placeHolder 占位图片
  *  @param complete    完成后的回调
  */
-- (void)setImageWithURL:(NSURL *_Nullable)url  option:(NSInteger)option placeHolder:(UIImage *_Nullable)placeHolder completeBlock:(nullable void (^)(UIImage * _Nullable image))complete{
-    [self setImageWithURL:url option:option placeHolder:placeHolder progress:nil completeBlock:complete];
+- (void)cyImageWithURL:(NSURL *_Nullable)url  option:(NSInteger)option placeHolder:(UIImage *_Nullable)placeHolder completeBlock:(nullable void (^)(UIImage * _Nullable image))complete{
+    [self cyImageWithURL:url option:option placeHolder:placeHolder progress:nil completeBlock:complete];
 }
 
 /**
@@ -62,7 +62,7 @@
  *  @param progress    进度条
  *  @param complete    完成后的回调
  */
-- (void)setImageWithURL:(NSURL *_Nullable)url  option:(NSInteger)option placeHolder:(UIImage *_Nullable)placeHolder progress:(nullable CYDownloadProgressBlock)progress completeBlock:(nullable void (^)(UIImage * _Nullable image))complete {
+- (void)cyImageWithURL:(NSURL *_Nullable)url  option:(NSInteger)option placeHolder:(UIImage *_Nullable)placeHolder progress:(nullable CYDownloadProgressBlock)progress completeBlock:(nullable void (^)(UIImage * _Nullable image))complete {
     if (placeHolder) {
         self.image = placeHolder;
     }

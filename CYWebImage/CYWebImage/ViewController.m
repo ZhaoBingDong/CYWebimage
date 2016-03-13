@@ -65,15 +65,18 @@
 //        [cell.cyImagreView setImageWithURL:url.absoluteString placeHolder:[UIImage imageNamed:@"huluw"]];
     
     
-    [cell.cyImagreView setImageWithURL:url placeHolder:[UIImage imageNamed:@"菜谱详情加载"]];
+    [cell.cyImagreView cyImageWithURL:url placeHolder:[UIImage imageNamed:@"菜谱详情加载"]];
     
-    //    [cell.cyImagreView setImageWithURL:url option:CYWebImageOptionDefault placeHolder:[UIImage imageNamed:@"菜谱详情加载"] progress:^(float receviedSize, float totalSize) {
-    //        NSLog(@"-----%f",receviedSize/totalSize);
-    //    } completeBlock:^(UIImage * _Nullable image) {
-    //
-    ////        NSLog(@"----%@",image);
-    //
-    //    }];
+//    [cell.cyImagreView setImageWithURL:url];
+    
+    
+//        [cell.cyImagreView setImageWithURL:url option:CYWebImageOptionHighPriority placeHolder:[UIImage imageNamed:@"菜谱详情加载"] progress:^(float receviedSize, float totalSize) {
+//            NSLog(@"-----%f",receviedSize/totalSize);
+//        } completeBlock:^(UIImage * _Nullable image) {
+//    
+//    //        NSLog(@"----%@",image);
+//    
+//        }];
 
     
     // SDWebImage缓存图片的方法
