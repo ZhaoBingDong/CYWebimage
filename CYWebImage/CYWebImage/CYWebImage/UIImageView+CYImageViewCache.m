@@ -10,6 +10,7 @@
 #import "CYDownloadOperation.h"
 #import "CYDownloadManager.h"
 #import "CYImageCache.h"
+
 @implementation UIImageView (CYImageViewCache)
 
 - (void)setImageWithURL:(NSString*)url placeHolder:(UIImage*)placeHolder
@@ -22,32 +23,13 @@
     [[CYDownloadManager shareInstance] downImageWitthURL:url completeBlock:^(UIImage *image) {
         __strong typeof(weakSelf)strongSelf = weakSelf;
         strongSelf.image = image;
+        
+        
     }];
     
-//    NSData *data = [CYImageCache cyImageCacheImageMemoryForKey:url];
-//    if (!data) {
-//        data = [CYImageCache cyImageCacheImageDiskForKey:url];
-//        if (!data) {
-//            [[CYDownloadManager shareInstance] downImageWitthURL:url completeBlock:^(UIImage *image) {
-//                __strong typeof(weakSelf)strongSelf = weakSelf;
-//                strongSelf.image = image;
-//            }];
-//        }else
-//        {
-//            [CYImageCache saveImageCacheToMemoryWithData:data ForKey:url];
-//            [self setImageWithData:data];
-//        }
-//    }else
-//    {
-//        [self setImageWithData:data];
-//    }
+    
 }
 
-- (void)setImageWithData:(NSData*)data
-{
-    UIImage *image = [UIImage imageWithData:data];
-    self.image = image;
-}
 
 
 

@@ -8,21 +8,18 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-@class CYDownloadManager;
-@protocol CYDownloadManagerDelegate <NSObject>
-@optional
 
-- (void)downloadManagerOperatioDidFinishedDownload:(CYDownloadManager*)downloadManager withImage:(UIImage*)image;
-
-@end
 @interface CYDownloadManager : NSObject
 
 + (instancetype)shareInstance;
 
-@property (nonatomic,weak) id<CYDownloadManagerDelegate>delegate;
-
+/**
+ *  根据 url 地址开始下载图片
+ *
+ *  @param url           图片 url 地址
+ *  @param completeBlock 完成的回调
+ */
 - (void)downImageWitthURL:(NSString*)url completeBlock:(void(^)(UIImage *image))completeBlock;
-
 
 
 @end
