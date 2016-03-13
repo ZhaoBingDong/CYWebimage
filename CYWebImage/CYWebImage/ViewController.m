@@ -53,7 +53,6 @@
     if (!cell) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"CYTableViewCell" owner:nil options:nil] lastObject];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-
     }
     
     NSString *image_url = self.dataSource[indexPath.row];
@@ -61,10 +60,26 @@
     NSURL *url = [NSURL URLWithString:image_url];
     // 设置圆角图片 调用的是 SDWebImage 的下载方法
 //    [cell.cyImagreView setRoundImageWithURL:url placeHoder:[UIImage imageNamed:@"huluw.png"]];
-    // 自己写的缓存图片方法 只做学习交流 并不能用到项目里 优化的不够好
-        [cell.cyImagreView setImageWithURL:url.absoluteString placeHolder:[UIImage imageNamed:@"huluw"]];
     
+    // 自己写的缓存图片方法 只做学习交流 并不能用到项目里 优化的不够好
+//        [cell.cyImagreView setImageWithURL:url.absoluteString placeHolder:[UIImage imageNamed:@"huluw"]];
+    
+    
+    [cell.cyImagreView setImageWithURL:url placeHolder:[UIImage imageNamed:@"菜谱详情加载"]];
+    
+    //    [cell.cyImagreView setImageWithURL:url option:CYWebImageOptionDefault placeHolder:[UIImage imageNamed:@"菜谱详情加载"] progress:^(float receviedSize, float totalSize) {
+    //        NSLog(@"-----%f",receviedSize/totalSize);
+    //    } completeBlock:^(UIImage * _Nullable image) {
+    //
+    ////        NSLog(@"----%@",image);
+    //
+    //    }];
+
+    
+    // SDWebImage缓存图片的方法
 //    [cell.cyImagreView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"huluw"]];
+    
+    
     
     return cell;
 }

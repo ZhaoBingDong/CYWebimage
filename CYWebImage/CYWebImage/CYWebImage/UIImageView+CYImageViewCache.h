@@ -7,10 +7,60 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CYDownloadManager.h"
 
 @interface UIImageView (CYImageViewCache)
 
-/** <根据 url 来加载一个网络图片> */
-- (void)setImageWithURL:(NSString*)url placeHolder:(UIImage*)placeHolder;
+/**
+ *  根据一个 url 获取图片
+ *
+ *  @param url url
+ */
+- (void)setImageWithURL:(NSURL *_Nullable)url;
+/**
+ *  根据一个 url 获取图片
+ *
+ *  @param url          url
+ *  @param placeHolder  占位图片
+ */
+- (void)setImageWithURL:(NSURL *_Nullable)url placeHolder:(UIImage* _Nullable)placeHolder;
+/**
+ *  根据一个 url 获取图片
+ *
+ *  @param url          url
+ *  @param placeHolder  占位图片
+ *  @param complete    回调事件
+ */
+- (void)setImageWithURL:(NSURL *_Nullable)url
+            placeHolder:(UIImage* _Nullable)placeHolder
+          completeBlock:(nullable void (^)(UIImage *_Nullable image))complete;
+
+/**
+ *   根据一个 url 来获取图片
+ *
+ *  @param url          url
+ *  @param option       任务类型 比如失败重试 低优先级 高优先级
+ *  @param placeHolder 占位图片
+ *  @param complete    完成后的回调
+ */
+- (void)setImageWithURL:(NSURL *_Nullable)url
+                 option:(NSInteger)option
+            placeHolder:(UIImage *_Nullable)placeHolder
+          completeBlock:(nullable void (^)(UIImage * _Nullable image))complete;
+
+/**
+ *  根据一个 url 来获取图片 带进度
+ *
+ *  @param url          url
+ *  @param option      option
+ *  @param placeHolder  占位图片
+ *  @param progress    进度条
+ *  @param complete    完成后的回调
+ */
+- (void)setImageWithURL:(NSURL *_Nullable)url
+                 option:(NSInteger)option
+            placeHolder:(UIImage *_Nullable)placeHolder
+               progress:(nullable CYDownloadProgressBlock)progress
+          completeBlock:(nullable void (^)(UIImage * _Nullable image))complete;
 
 @end

@@ -8,11 +8,10 @@
 
 #import "CYDownloadManager.h"
 #import "CYDownloadOperation.h"
-#import "CYOperationQueue.h"
 #import "CYImageCache.h"
 
 @interface CYDownloadManager   ()<CYDownloadOperationDelegate>
-@property (nonatomic,strong) CYOperationQueue *queue;
+@property (nonatomic,strong) NSOperationQueue *queue;
 @property (nonatomic,strong) NSMutableDictionary *opeartionQueues;
 @property (nonatomic,strong) NSMutableDictionary *blocks;
 
@@ -46,7 +45,7 @@
 - (NSOperationQueue *)queue
 {
     if (!_queue) {
-        _queue = [[CYOperationQueue alloc] init];
+        _queue = [[NSOperationQueue alloc] init];
     }
     return _queue;
 }
@@ -72,42 +71,53 @@
  *  @param url           图片 url 地址
  *  @param completeBlock 完成的回调
  */
-- (void)downImageWitthURL:(NSString*)url completeBlock:(void(^)(UIImage *image))completeBlock
+- (void)downImageWitthURL:(NSURL *_Nullable)url  options:(CYWebImageOption)option progress:(nullable CYDownloadProgressBlock)progress completeBlock:(nullable void(^)(UIImage *_Nullable image))completeBlock
 {
     // 先读内存 再读本地 如果本地和内存都没有再从网络下载图片
-    NSData *data = [[CYImageCache shareInstance] cyImageCacheImageMemoryForKey:url];
+   __block NSData *data = [[CYImageCache shareInstance] cyImageCacheImageMemoryForKey:url.absoluteString];
     if (data) {
         completeBlock([UIImage imageWithData:data]);
-    }else if ([[CYImageCache shareInstance] cyImageCacheImageDiskForKey:url]){
-        data = [[CYImageCache shareInstance] cyImageCacheImageDiskForKey:url];
-        [[CYImageCache shareInstance] saveImageCacheToMemoryWithData:data ForKey:url];
+        progress(1,1);
+    }else if ([[CYImageCache shareInstance] cyImageCacheImageDiskForKey:url.absoluteString]){
+        data = [[CYImageCache shareInstance] cyImageCacheImageDiskForKey:url.absoluteString];
         completeBlock([UIImage imageWithData:data]);
+        progress(1,1);
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [[CYImageCache shareInstance] saveImageCacheToMemoryWithData:data ForKey:url.absoluteString];
+        });
     }else{
         if (!completeBlock||!url) return;
         NSDictionary *dict = @{
                                @"url" : url,
-                               @"block" : completeBlock
+                               @"block" : completeBlock ,
+                               @"progress" : progress ,
+                               @"option" : @(option)
                                };
-        [self performSelector:@selector(downLoadWithParams:) withObject:dict afterDelay:0 inModes:@[NSDefaultRunLoopMode]];
-        [self performSelector:@selector(suspended:) withObject:@(NO) afterDelay:0 inModes:@[NSDefaultRunLoopMode]];
-        [self performSelector:@selector(suspended:) withObject:@(YES) afterDelay:0 inModes:@[UITrackingRunLoopMode]];
+        if (option !=2 ) {
+            [self performSelector:@selector(downLoadWithParams:) withObject:dict afterDelay:0 inModes:@[NSDefaultRunLoopMode]];
+            [self performSelector:@selector(suspended:) withObject:@(NO) afterDelay:0 inModes:@[NSDefaultRunLoopMode]];
+            [self performSelector:@selector(suspended:) withObject:@(YES) afterDelay:0 inModes:@[UITrackingRunLoopMode]];
+        }else{
+            [self downLoadWithParams:dict];
+        }
     }
 }
 - (void)downLoadWithParams:(id)params {
     
-
-    NSString *url = params[@"url"];
+    NSURL *url = params[@"url"];
     void (^completeBlock) (UIImage *image) = params[@"block"];
+    void (^progressBlock) (float receivedSize , float totalSize) = params[@"progress"];
     CYDownloadOperation *oldOpeartion = self.opeartionQueues[url];
     if (oldOpeartion) return;
     CYDownloadOperation *opeartion = [[CYDownloadOperation alloc] init];
     opeartion.image_url         = url;
     opeartion.delegate          = (id<CYDownloadOperationDelegate>)self;
+    opeartion.progressBlock     = progressBlock;
+    opeartion.options           = [params[@"option"] integerValue];
     [self.queue addOperation:opeartion];
     [self.opeartionQueues setObject:opeartion forKey:url];
     [self.blocks setObject:completeBlock forKey:url];
     
- 
 }
 /**
  *  单个下载图片的任务完成后在这里对图片进行缓存,并回调给出去
@@ -119,7 +129,7 @@
 {
     if (!image) return;
     
-    __block NSData *data = UIImageJPEGRepresentation(image,0.5);
+    __block NSData *data = UIImageJPEGRepresentation(image,1);
     void (^complete)(UIImage *image) = self.blocks[operation.image_url];
     if (complete) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -129,10 +139,13 @@
     // 保存下图片
     dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self.blocks removeObjectForKey:operation.image_url];
+        [[CYImageCache shareInstance] saveImageCacheToMemoryWithData:data ForKey:operation.image_url.absoluteString];
+        if (operation.options != 3) {
+            [[CYImageCache shareInstance] saveImageCacheToDiskWithData:data ForKey:operation.image_url.absoluteString];
+        }
         [self.opeartionQueues removeObjectForKey:operation.image_url];
-        [[CYImageCache shareInstance] saveImageCacheToDiskWithData:data ForKey:operation.image_url];
-        [[CYImageCache shareInstance] saveImageCacheToMemoryWithData:data ForKey:operation.image_url];
     });
 }
+
 
 @end

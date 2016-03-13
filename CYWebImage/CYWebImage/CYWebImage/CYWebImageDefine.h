@@ -12,9 +12,9 @@
 #import "CYImageCache.h"
 #import "CYDownloadManager.h"
 #import "CYDownloadOperation.h"
-#import "CYOperationQueue.h"
 #import "UIImageView+CYImageViewCache.h"
 
 #define CYImageCacheFilePath(url) [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:[url lastPathComponent]]
+
 
 #endif /* CYWebImageDefine_h */

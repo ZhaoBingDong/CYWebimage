@@ -50,5 +50,13 @@
  *  清除内存中的缓存
  */
 - (void)cleanImageCacheMemory;
+/**
+ *  缓存图片的个数
+ */
+@property (nonatomic,assign) NSInteger maxCacheCount;
+/**
+ *  缓存图片的最大尺寸
+ */
+@property (nonatomic,assign) NSInteger maxCacheSize;
 
 @end

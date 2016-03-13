@@ -44,7 +44,7 @@
 - (void)startDownloadImage
 {
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.image_url]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:self.image_url];
     self.session  = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:[NSOperationQueue currentQueue]];
     self.downloadTask = [self.session downloadTaskWithRequest:request];
     [self.downloadTask resume];
@@ -53,7 +53,6 @@
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask
 didFinishDownloadingToURL:(NSURL *)location
 {
-    
     NSData *data = [NSData dataWithContentsOfURL:location];
     UIImage *image = [UIImage imageWithData:data];
     __weak typeof(self)weakSelf = self;
@@ -69,13 +68,13 @@ didFinishDownloadingToURL:(NSURL *)location
  totalBytesWritten:(int64_t)totalBytesWritten
 totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite
 {
-    CGFloat progress = (float)((float)bytesWritten/(float)totalBytesWritten);
-    NSLog(@"---> %f",progress);
+    if (self.progressBlock) {
+        self.progressBlock((float)totalBytesWritten,(float)totalBytesExpectedToWrite);
+    }
 }
 - (void)dealloc
 {
-    
-    NSLog(@"下载任务被释放了");
+//    NSLog(@"下载任务被释放了");
     self.downloadTask = nil;
     self.session = nil;
     [[NSNotificationCenter defaultCenter]removeObserver:self];

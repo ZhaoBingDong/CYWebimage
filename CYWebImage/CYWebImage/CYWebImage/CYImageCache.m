@@ -20,13 +20,15 @@
 
 + (instancetype)allocWithZone:(struct _NSZone *)zone
 {
-    static CYImageCache *_imageCache;
+    static CYImageCache *_cyImageCache;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _imageCache = [super allocWithZone:zone];
-        [[NSNotificationCenter defaultCenter] addObserver:_imageCache selector:@selector(cleanImageCacheMemory) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
+        _cyImageCache = [super allocWithZone:zone];
+        _cyImageCache.imageCache.countLimit = 30;
+        _cyImageCache.imageCache.totalCostLimit = 100000;
+        [[NSNotificationCenter defaultCenter] addObserver:_cyImageCache selector:@selector(cleanImageCacheMemory) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
     });
-    return _imageCache;
+    return _cyImageCache;
 }
 + (instancetype)shareInstance
 {
@@ -99,6 +101,18 @@
  */
 - (void)cache:(NSCache *)cache willEvictObject:(id)obj
 {
+//    NSLog(@"----%p",obj);
+    
+}
+
+- (void)setMaxCacheCount:(NSInteger)maxCacheCount{
+    _maxCacheCount = maxCacheCount;
+    self.imageCache.countLimit = maxCacheCount;
+}
+
+- (void)setMaxCacheSize:(NSInteger)maxCacheSize{
+    _maxCacheSize   = maxCacheSize;
+    self.imageCache.totalCostLimit = _maxCacheSize;
     
 }
 @end

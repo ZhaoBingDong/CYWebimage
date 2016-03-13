@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "SDWebImage/SDWebImage/SDImageCache.h"
+#import "CYImageCache.h"
 @interface AppDelegate ()
 
 @end
@@ -23,7 +24,9 @@
 //    [[SDImageCache sharedImageCache]setMaxCacheSize:10000];
 //    
     
+    [[CYImageCache shareInstance]setMaxCacheSize:1000];
     
+
     return YES;
 }
 
@@ -47,6 +50,9 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    
+    [[CYImageCache shareInstance]cleanImageCacheMemory];
+    
 }
 
 @end

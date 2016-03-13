@@ -41,7 +41,6 @@
 		66EC749E1C82EAF900FFA916 /* CYDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 66EC74921C82EAF900FFA916 /* CYDownloadManager.m */; };
 		66EC749F1C82EAF900FFA916 /* CYDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 66EC74941C82EAF900FFA916 /* CYDownloadOperation.m */; };
 		66EC74A01C82EAF900FFA916 /* CYImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 66EC74961C82EAF900FFA916 /* CYImageCache.m */; };
-		66EC74A11C82EAF900FFA916 /* CYOperationQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 66EC74981C82EAF900FFA916 /* CYOperationQueue.m */; };
 		66EC74A21C82EAF900FFA916 /* NSString+CYMD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 66EC749B1C82EAF900FFA916 /* NSString+CYMD5.m */; };
 		66EC74A31C82EAF900FFA916 /* UIImageView+CYImageViewCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 66EC749D1C82EAF900FFA916 /* UIImageView+CYImageViewCache.m */; };
 /* End PBXBuildFile section */
@@ -128,8 +127,6 @@
 		66EC74941C82EAF900FFA916 /* CYDownloadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CYDownloadOperation.m; sourceTree = "<group>"; };
 		66EC74951C82EAF900FFA916 /* CYImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYImageCache.h; sourceTree = "<group>"; };
 		66EC74961C82EAF900FFA916 /* CYImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CYImageCache.m; sourceTree = "<group>"; };
-		66EC74971C82EAF900FFA916 /* CYOperationQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYOperationQueue.h; sourceTree = "<group>"; };
-		66EC74981C82EAF900FFA916 /* CYOperationQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CYOperationQueue.m; sourceTree = "<group>"; };
 		66EC74991C82EAF900FFA916 /* CYWebImageDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYWebImageDefine.h; sourceTree = "<group>"; };
 		66EC749A1C82EAF900FFA916 /* NSString+CYMD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CYMD5.h"; sourceTree = "<group>"; };
 		66EC749B1C82EAF900FFA916 /* NSString+CYMD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CYMD5.m"; sourceTree = "<group>"; };
@@ -294,17 +291,15 @@
 		66EC74901C82EAF900FFA916 /* CYWebImage */ = {
 			isa = PBXGroup;
 			children = (
+				66EC74991C82EAF900FFA916 /* CYWebImageDefine.h */,
+				66EC74951C82EAF900FFA916 /* CYImageCache.h */,
+				66EC74961C82EAF900FFA916 /* CYImageCache.m */,
+				66EC749A1C82EAF900FFA916 /* NSString+CYMD5.h */,
+				66EC749B1C82EAF900FFA916 /* NSString+CYMD5.m */,
 				66EC74911C82EAF900FFA916 /* CYDownloadManager.h */,
 				66EC74921C82EAF900FFA916 /* CYDownloadManager.m */,
 				66EC74931C82EAF900FFA916 /* CYDownloadOperation.h */,
 				66EC74941C82EAF900FFA916 /* CYDownloadOperation.m */,
-				66EC74951C82EAF900FFA916 /* CYImageCache.h */,
-				66EC74961C82EAF900FFA916 /* CYImageCache.m */,
-				66EC74971C82EAF900FFA916 /* CYOperationQueue.h */,
-				66EC74981C82EAF900FFA916 /* CYOperationQueue.m */,
-				66EC74991C82EAF900FFA916 /* CYWebImageDefine.h */,
-				66EC749A1C82EAF900FFA916 /* NSString+CYMD5.h */,
-				66EC749B1C82EAF900FFA916 /* NSString+CYMD5.m */,
 				66EC749C1C82EAF900FFA916 /* UIImageView+CYImageViewCache.h */,
 				66EC749D1C82EAF900FFA916 /* UIImageView+CYImageViewCache.m */,
 			);
@@ -473,7 +468,6 @@
 				2D5B836A1C928AFE00021B1E /* UIView+WebCacheOperation.m in Sources */,
 				2D5B83671C928AFE00021B1E /* UIImage+MultiFormat.m in Sources */,
 				2D5B83601C928AFE00021B1E /* SDWebImageDecoder.m in Sources */,
-				66EC74A11C82EAF900FFA916 /* CYOperationQueue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
