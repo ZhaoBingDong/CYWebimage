@@ -10,14 +10,6 @@
 #import "CYDownloadOperation.h"
 @implementation CYOperationQueue
 
-- (void)setSuspended:(BOOL)suspended
-{
-    [super setSuspended:suspended];
-    
-    BOOL pause = suspended;
-    
-    [[NSNotificationCenter defaultCenter]postNotificationName:@"pause" object:@(pause)];
-    
-}
+
 
 @end

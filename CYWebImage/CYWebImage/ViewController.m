@@ -45,7 +45,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100;
+    return 200;
 }
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -60,9 +60,9 @@
     
     NSURL *url = [NSURL URLWithString:image_url];
     // 设置圆角图片 调用的是 SDWebImage 的下载方法
-    [cell.cyImagreView setRoundImageWithURL:url placeHoder:[UIImage imageNamed:@"huluw.png"]];
+//    [cell.cyImagreView setRoundImageWithURL:url placeHoder:[UIImage imageNamed:@"huluw.png"]];
     // 自己写的缓存图片方法 只做学习交流 并不能用到项目里 优化的不够好
-    //    [cell.cyImagreView setImageWithURL:url.absoluteString placeHolder:[UIImage imageNamed:@"huluw"]];
+        [cell.cyImagreView setImageWithURL:url.absoluteString placeHolder:[UIImage imageNamed:@"huluw"]];
     
 //    [cell.cyImagreView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"huluw"]];
     

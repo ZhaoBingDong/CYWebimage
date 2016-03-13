@@ -10,5 +10,8 @@
 
 @implementation CYTableViewCell
 
-
+- (void)awakeFromNib{
+    
+    
+}
 @end

@@ -18,23 +18,29 @@
         self.image = placeHolder;
     }
     __weak typeof(self)weakSelf = self;
-    NSData *data = [CYImageCache cyImageCacheImageMemoryForKey:url];
-    if (!data) {
-        data = [CYImageCache cyImageCacheImageDiskForKey:url];
-        if (!data) {
-            [[CYDownloadManager shareInstance] downImageWitthURL:url completeBlock:^(UIImage *image) {
-                __strong typeof(weakSelf)strongSelf = weakSelf;
-                strongSelf.image = image;
-            }];
-        }else
-        {
-            [CYImageCache saveImageCacheToMemoryWithData:data ForKey:url];
-            [self setImageWithData:data];
-        }
-    }else
-    {
-        [self setImageWithData:data];
-    }
+    
+    [[CYDownloadManager shareInstance] downImageWitthURL:url completeBlock:^(UIImage *image) {
+        __strong typeof(weakSelf)strongSelf = weakSelf;
+        strongSelf.image = image;
+    }];
+    
+//    NSData *data = [CYImageCache cyImageCacheImageMemoryForKey:url];
+//    if (!data) {
+//        data = [CYImageCache cyImageCacheImageDiskForKey:url];
+//        if (!data) {
+//            [[CYDownloadManager shareInstance] downImageWitthURL:url completeBlock:^(UIImage *image) {
+//                __strong typeof(weakSelf)strongSelf = weakSelf;
+//                strongSelf.image = image;
+//            }];
+//        }else
+//        {
+//            [CYImageCache saveImageCacheToMemoryWithData:data ForKey:url];
+//            [self setImageWithData:data];
+//        }
+//    }else
+//    {
+//        [self setImageWithData:data];
+//    }
 }
 
 - (void)setImageWithData:(NSData*)data

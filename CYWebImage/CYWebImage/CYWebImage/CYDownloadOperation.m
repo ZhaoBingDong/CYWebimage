@@ -18,27 +18,26 @@
 {
     self = [super init];
     if (self) {
-        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(pause:) name:@"pause" object:nil];
+        [self performSelector:@selector(pause) withObject:nil afterDelay:0 inModes:@[UITrackingRunLoopMode]];
+        [self performSelector:@selector(resume) withObject:nil afterDelay:0 inModes:@[NSDefaultRunLoopMode]];
     }
     return self;
 }
 - (void)main
 {
     @autoreleasepool {
-        if (self.isCancelled) return;
         [self startDownloadImage];
     }
 }
-- (void)pause:(NSNotification*)noti
+- (void)pause
 {
-    BOOL pause = [(NSNumber*)noti.object boolValue];
-    
-    if (pause) {
-        [self.downloadTask suspend];
-    }else{
-        [self.downloadTask resume];
-    }
+    [self.downloadTask suspend];
 }
+
+- (void)resume{
+    [self.downloadTask resume];
+}
+
 /**
  *  开始下载图片
  */
@@ -75,6 +74,7 @@ totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite
 }
 - (void)dealloc
 {
+    
     NSLog(@"下载任务被释放了");
     self.downloadTask = nil;
     self.session = nil;
