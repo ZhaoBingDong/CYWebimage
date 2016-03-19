@@ -58,6 +58,7 @@
     NSString *image_url = self.dataSource[indexPath.row];
     
     NSURL *url = [NSURL URLWithString:image_url];
+    
     // 设置圆角图片 调用的是 SDWebImage 的下载方法
 //    [cell.cyImagreView setRoundImageWithURL:url placeHoder:[UIImage imageNamed:@"huluw.png"]];
     

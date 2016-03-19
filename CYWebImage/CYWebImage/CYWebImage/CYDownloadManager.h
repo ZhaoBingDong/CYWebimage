@@ -10,15 +10,21 @@
 #import <UIKit/UIKit.h>
 
 typedef NS_ENUM(NSInteger,CYWebImageOption) {
-    CYWebImageOptionDefault = 0,
-    CYWebImageOptionLowPriority = 1,
-    CYWebImageOptionHighPriority = 2 ,
-    CYWebImageOptionCacheMemoryOnly = 3,
+    CYWebImageOptionDefault = 0, // 默认
+    CYWebImageOptionLowPriority = 1, // 低优先级
+    CYWebImageOptionHighPriority = 2 , // 高优先级
+    CYWebImageOptionCacheMemoryOnly = 3, // 缓存在内存中
 };
-
+/**
+ *  下载图片进度的 block
+ *
+ *  @param receviedSize  接受到的图片内容大小
+ *  @param totalSize     图片内容总大小
+ */
 typedef void(^CYDownloadProgressBlock)(float receviedSize,float totalSize);
 
 @interface CYDownloadManager : NSObject
+
 
 + (_Nonnull instancetype)shareInstance;
 

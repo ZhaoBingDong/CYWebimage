@@ -27,6 +27,7 @@
 		2D5B83691C928AFE00021B1E /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5B83581C928AFE00021B1E /* UIImageView+WebCache.m */; };
 		2D5B836A1C928AFE00021B1E /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5B835A1C928AFE00021B1E /* UIView+WebCacheOperation.m */; };
 		2D5B836C1C928BBF00021B1E /* huluw.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D5B836B1C928BBF00021B1E /* huluw.png */; };
+		66786E601C9D9FA400E0CE95 /* CYRoundTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 66786E5F1C9D9FA400E0CE95 /* CYRoundTableViewCell.m */; };
 		66EC74581C82E5C200FFA916 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 66EC74571C82E5C200FFA916 /* main.m */; };
 		66EC745B1C82E5C200FFA916 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 66EC745A1C82E5C200FFA916 /* AppDelegate.m */; };
 		66EC745E1C82E5C200FFA916 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66EC745D1C82E5C200FFA916 /* ViewController.m */; };
@@ -101,6 +102,8 @@
 		2D5B83591C928AFE00021B1E /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		2D5B835A1C928AFE00021B1E /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
 		2D5B836B1C928BBF00021B1E /* huluw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = huluw.png; sourceTree = "<group>"; };
+		66786E5E1C9D9FA400E0CE95 /* CYRoundTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYRoundTableViewCell.h; sourceTree = "<group>"; };
+		66786E5F1C9D9FA400E0CE95 /* CYRoundTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CYRoundTableViewCell.m; sourceTree = "<group>"; };
 		66EC74531C82E5C200FFA916 /* CYWebImage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CYWebImage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		66EC74571C82E5C200FFA916 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		66EC74591C82E5C200FFA916 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -253,6 +256,8 @@
 				66EC74891C82E6DA00FFA916 /* CYTableViewCell.h */,
 				66EC748A1C82E6DA00FFA916 /* CYTableViewCell.m */,
 				66EC748B1C82E6DA00FFA916 /* CYTableViewCell.xib */,
+				66786E5E1C9D9FA400E0CE95 /* CYRoundTableViewCell.h */,
+				66786E5F1C9D9FA400E0CE95 /* CYRoundTableViewCell.m */,
 				66EC745F1C82E5C200FFA916 /* Main.storyboard */,
 				66EC74621C82E5C200FFA916 /* Assets.xcassets */,
 				66EC74641C82E5C200FFA916 /* LaunchScreen.storyboard */,
@@ -465,6 +470,7 @@
 				2D5B83641C928AFE00021B1E /* SDWebImagePrefetcher.m in Sources */,
 				2D5B83651C928AFE00021B1E /* UIButton+WebCache.m in Sources */,
 				2D5B83691C928AFE00021B1E /* UIImageView+WebCache.m in Sources */,
+				66786E601C9D9FA400E0CE95 /* CYRoundTableViewCell.m in Sources */,
 				2D5B836A1C928AFE00021B1E /* UIView+WebCacheOperation.m in Sources */,
 				2D5B83671C928AFE00021B1E /* UIImage+MultiFormat.m in Sources */,
 				2D5B83601C928AFE00021B1E /* SDWebImageDecoder.m in Sources */,

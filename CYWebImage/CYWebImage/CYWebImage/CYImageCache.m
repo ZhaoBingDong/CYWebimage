@@ -52,12 +52,12 @@
     NSData *data = [self.imageCache objectForKey:[key md5]];
     return data;
 }
-- (void)saveImageCacheToMemoryWithData:(NSData*)data ForKey:(NSString*)key
+- (void)saveImageCacheToMemoryWithData:(NSData*)data forKey:(NSString*)key
 {
     if (!data) return;
     [self.imageCache setObject:data forKey:[key md5]];
 }
-- (void)saveImageCacheToDiskWithData:(NSData*)data ForKey:(NSString*)key
+- (void)saveImageCacheToDiskWithData:(NSData*)data forKey:(NSString*)key
 {
     if (!data) return;
     [data writeToFile:[self createImagePathWithURL:key] atomically:YES];
@@ -83,6 +83,7 @@
     NSString *path = [cachePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",[image_url md5]]];
     return path;
 }
+
 + (NSString*)createImageCacheDiretory
 {
     NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];

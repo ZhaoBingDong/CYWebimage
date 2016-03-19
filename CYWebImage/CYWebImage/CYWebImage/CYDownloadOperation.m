@@ -10,6 +10,10 @@
 
 @interface CYDownloadOperation ()<NSURLSessionDownloadDelegate>
 
+@property (nonatomic,strong) NSURLSession *session;
+
+@property (nonatomic,strong) NSURLSessionDownloadTask *downloadTask;
+
 @end
 
 @implementation CYDownloadOperation
@@ -29,6 +33,7 @@
         [self startDownloadImage];
     }
 }
+
 - (void)pause
 {
     [self.downloadTask suspend];
@@ -74,9 +79,7 @@ totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite
 }
 - (void)dealloc
 {
-//    NSLog(@"下载任务被释放了");
     self.downloadTask = nil;
     self.session = nil;
-    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 @end

@@ -11,9 +11,10 @@
 #import "CYImageCache.h"
 
 @interface CYDownloadManager   ()<CYDownloadOperationDelegate>
+
 @property (nonatomic,strong) NSOperationQueue *queue;
-@property (nonatomic,strong) NSMutableDictionary *opeartionQueues;
-@property (nonatomic,strong) NSMutableDictionary *blocks;
+
+@property (nonatomic,strong) NSMutableDictionary <NSString *,CYDownloadOperation *>*opeartionQueues;
 
 @end
 
@@ -57,14 +58,6 @@
     return _opeartionQueues;
 }
 
-- (NSMutableDictionary *)blocks
-{
-    if (!_blocks) {
-        _blocks = [NSMutableDictionary dictionary];
-    }
-    return _blocks;
-}
-
 /**
  *  根据 url 地址开始下载图片
  *
@@ -83,9 +76,9 @@
         completeBlock([UIImage imageWithData:data]);
         progress(1,1);
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [[CYImageCache shareInstance] saveImageCacheToMemoryWithData:data ForKey:url.absoluteString];
+            [[CYImageCache shareInstance] saveImageCacheToMemoryWithData:data forKey:url.absoluteString];
         });
-    }else{
+    } else {
         if (!completeBlock||!url) return;
         NSDictionary *dict = @{
                                @"url" : url,
@@ -93,8 +86,8 @@
                                @"progress" : progress ,
                                @"option" : @(option)
                                };
-        if (option !=2 ) {
-            [self performSelector:@selector(downLoadWithParams:) withObject:dict afterDelay:0 inModes:@[NSDefaultRunLoopMode]];
+        if (option != CYWebImageOptionHighPriority) {
+            [self performSelector:@selector(downLoadWithParams:) withObject:dict afterDelay:0 inModes:@[NSRunLoopCommonModes]];
             [self performSelector:@selector(suspended:) withObject:@(NO) afterDelay:0 inModes:@[NSDefaultRunLoopMode]];
             [self performSelector:@selector(suspended:) withObject:@(YES) afterDelay:0 inModes:@[UITrackingRunLoopMode]];
         }else{
@@ -105,19 +98,19 @@
 - (void)downLoadWithParams:(id)params {
     
     NSURL *url = params[@"url"];
-    void (^completeBlock) (UIImage *image) = params[@"block"];
+   __block void (^completeBlock) (UIImage *image) = params[@"block"];
     void (^progressBlock) (float receivedSize , float totalSize) = params[@"progress"];
-    CYDownloadOperation *oldOpeartion = self.opeartionQueues[url];
+    CYDownloadOperation *oldOpeartion = self.opeartionQueues[url.absoluteString];
     if (oldOpeartion) return;
     CYDownloadOperation *opeartion = [[CYDownloadOperation alloc] init];
     opeartion.image_url         = url;
     opeartion.delegate          = (id<CYDownloadOperationDelegate>)self;
     opeartion.progressBlock     = progressBlock;
     opeartion.options           = [params[@"option"] integerValue];
+    opeartion.downloadCompleteBlock = completeBlock;
     [self.queue addOperation:opeartion];
     [self.opeartionQueues setObject:opeartion forKey:url];
-    [self.blocks setObject:completeBlock forKey:url];
-    
+
 }
 /**
  *  单个下载图片的任务完成后在这里对图片进行缓存,并回调给出去
@@ -130,20 +123,18 @@
     if (!image) return;
     
     __block NSData *data = UIImageJPEGRepresentation(image,1);
-    void (^complete)(UIImage *image) = self.blocks[operation.image_url];
-    if (complete) {
+    if (operation.downloadCompleteBlock) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            complete([UIImage imageWithData:data]);
+            operation.downloadCompleteBlock([UIImage imageWithData:data]);
         });
     }
     // 保存下图片
     dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self.blocks removeObjectForKey:operation.image_url];
-        [[CYImageCache shareInstance] saveImageCacheToMemoryWithData:data ForKey:operation.image_url.absoluteString];
-        if (operation.options != 3) {
-            [[CYImageCache shareInstance] saveImageCacheToDiskWithData:data ForKey:operation.image_url.absoluteString];
+        [[CYImageCache shareInstance] saveImageCacheToMemoryWithData:data forKey:operation.image_url.absoluteString];
+        if (operation.options != CYWebImageOptionCacheMemoryOnly) {
+            [[CYImageCache shareInstance] saveImageCacheToDiskWithData:data forKey:operation.image_url.absoluteString];
         }
-        [self.opeartionQueues removeObjectForKey:operation.image_url];
+        [self.opeartionQueues removeObjectForKey:operation.image_url.absoluteString];
     });
 }
 

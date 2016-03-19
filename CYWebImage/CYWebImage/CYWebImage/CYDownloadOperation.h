@@ -11,7 +11,9 @@
 
 #import <UIKit/UIKit.h>
 @class CYDownloadOperation;
+
 @protocol CYDownloadOperationDelegate <NSObject>
+
 @optional
 /**
  *  下载完成返回图片
@@ -19,19 +21,25 @@
  *  @param operation 任务
  *  @param image     下载好的图片
  */
-- (void)downloadOperatioDidFinishedDownload:(CYDownloadOperation*)operation withImage:(UIImage*)image;
+- (void)downloadOperatioDidFinishedDownload:(CYDownloadOperation* _Nullable)operation withImage:(UIImage *_Nullable)image;
 
 @end
 
 @interface CYDownloadOperation : NSOperation
-@property (nonatomic,copy) NSURL *image_url;
-@property (nonatomic,weak) id<CYDownloadOperationDelegate>delegate;
-@property (nonatomic, strong) NSIndexPath *indexPath;
-@property (nonatomic,strong) NSURLSession *session;
-@property (nonatomic,strong) NSURLSessionDownloadTask *downloadTask;
+
+@property (nonatomic,copy,nullable) NSURL *image_url;
+
+@property (nonatomic,weak,nullable) id<CYDownloadOperationDelegate>delegate;
+
+@property (nonatomic, strong,nullable) NSIndexPath *indexPath;
+
 @property (nonatomic,assign) CYWebImageOption options;
 
 /** < porgressBlock > */
-@property (nonatomic,copy) void (^progressBlock)(float receivedSize,float totalSize);
+@property (nonatomic,copy,nullable) void (^progressBlock)(float receivedSize,float totalSize);
+/**
+ *  下载完成的 block
+ */
+@property (nonatomic,copy,nullable) void (^downloadCompleteBlock) (UIImage *_Nullable image);
 
 @end

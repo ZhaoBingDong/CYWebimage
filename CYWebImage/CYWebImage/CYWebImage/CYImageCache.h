@@ -33,14 +33,14 @@
  *  @param data 图片
  *  @param key  图片 url
  */
-- (void)saveImageCacheToMemoryWithData:(NSData*)data ForKey:(NSString*)key;
+- (void)saveImageCacheToMemoryWithData:(NSData*)data forKey:(NSString*)key;
 /**
  *  图片 url 作为 key 将图片保存到硬盘中
  *
  *  @param data 图片
  *  @param key  图片 url
  */
-- (void)saveImageCacheToDiskWithData:(NSData*)data ForKey:(NSString*)key;
+- (void)saveImageCacheToDiskWithData:(NSData*)data forKey:(NSString*)key;
 
 /**
  *  清除磁盘中的缓存
@@ -58,5 +58,7 @@
  *  缓存图片的最大尺寸
  */
 @property (nonatomic,assign) NSInteger maxCacheSize;
+
+
 
 @end
