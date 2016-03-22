@@ -24,5 +24,4 @@
 - (void)setRoundImageWithURL:(NSURL *_Nonnull)url;
 
 
-
 @end

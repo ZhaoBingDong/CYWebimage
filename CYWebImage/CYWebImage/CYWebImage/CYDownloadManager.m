@@ -66,42 +66,55 @@
  */
 - (void)downImageWitthURL:(NSURL *_Nullable)url  options:(CYWebImageOption)option progress:(nullable CYDownloadProgressBlock)progress completeBlock:(nullable void(^)(UIImage *_Nullable image))completeBlock
 {
+    __block NSString *urlString = [url absoluteString];
+
     // 先读内存 再读本地 如果本地和内存都没有再从网络下载图片
-   __block NSData *data = [[CYImageCache shareInstance] cyImageCacheImageMemoryForKey:url.absoluteString];
-    if (data) {
-        completeBlock([UIImage imageWithData:data]);
+   __block NSData *memoryData = [[CYImageCache shareInstance] cyImageCacheImageMemoryForKey:urlString];
+    
+    __block NSData *localData = [[CYImageCache shareInstance] cyImageCacheImageDiskForKey:urlString];
+    
+    if (memoryData) {
+        completeBlock([UIImage imageWithData:memoryData]);
         progress(1,1);
-    }else if ([[CYImageCache shareInstance] cyImageCacheImageDiskForKey:url.absoluteString]){
-        data = [[CYImageCache shareInstance] cyImageCacheImageDiskForKey:url.absoluteString];
-        completeBlock([UIImage imageWithData:data]);
+    }else if (localData){
+
+        completeBlock([UIImage imageWithData:localData]);
         progress(1,1);
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [[CYImageCache shareInstance] saveImageCacheToMemoryWithData:data forKey:url.absoluteString];
+            [[CYImageCache shareInstance] saveImageCacheToMemoryWithData:localData forKey:urlString];
         });
+        
     } else {
-        if (!completeBlock||!url) return;
-        NSDictionary *dict = @{
-                               @"url" : url,
-                               @"block" : completeBlock ,
-                               @"progress" : progress ,
-                               @"option" : @(option)
-                               };
-        if (option != CYWebImageOptionHighPriority) {
-            [self performSelector:@selector(downLoadWithParams:) withObject:dict afterDelay:0 inModes:@[NSRunLoopCommonModes]];
-            [self performSelector:@selector(suspended:) withObject:@(NO) afterDelay:0 inModes:@[NSDefaultRunLoopMode]];
-            [self performSelector:@selector(suspended:) withObject:@(YES) afterDelay:0 inModes:@[UITrackingRunLoopMode]];
-        }else{
-            [self downLoadWithParams:dict];
+        
+        // 如果下载队列存在就返回 避免重复下载
+        CYDownloadOperation *operation = self.opeartionQueues[urlString];
+        if (!operation) {
+            
+            NSDictionary *dict = @{
+                                   @"url" : url,
+                                   @"block" : completeBlock ,
+                                   @"progress" : progress ,
+                                   @"option" : @(option)
+                                   };
+            
+            if (option != CYWebImageOptionHighPriority) {
+                [self performSelector:@selector(downLoadWithParams:) withObject:dict afterDelay:0 inModes:@[NSRunLoopCommonModes]];
+                [self performSelector:@selector(suspended:) withObject:@(NO) afterDelay:0 inModes:@[NSDefaultRunLoopMode]];
+                [self performSelector:@selector(suspended:) withObject:@(YES) afterDelay:0 inModes:@[UITrackingRunLoopMode]];
+            }else{
+                [self downLoadWithParams:dict];
+            }
+            
         }
+        
     }
 }
 - (void)downLoadWithParams:(id)params {
     
     NSURL *url = params[@"url"];
-   __block void (^completeBlock) (UIImage *image) = params[@"block"];
+    void (^completeBlock) (UIImage *image) = params[@"block"];
     void (^progressBlock) (float receivedSize , float totalSize) = params[@"progress"];
-    CYDownloadOperation *oldOpeartion = self.opeartionQueues[url.absoluteString];
-    if (oldOpeartion) return;
+    
     CYDownloadOperation *opeartion = [[CYDownloadOperation alloc] init];
     opeartion.image_url         = url;
     opeartion.delegate          = (id<CYDownloadOperationDelegate>)self;
@@ -120,22 +133,26 @@
  */
 - (void)downloadOperatioDidFinishedDownload:(CYDownloadOperation *)operation withImage:(UIImage *)image
 {
-    if (!image) return;
-    
-    __block NSData *data = UIImageJPEGRepresentation(image,1);
-    if (operation.downloadCompleteBlock) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            operation.downloadCompleteBlock([UIImage imageWithData:data]);
+    if (!image) {
+        operation.downloadCompleteBlock(nil);
+        [self.opeartionQueues removeObjectForKey:operation.image_url.absoluteString];
+    } else {
+        __block NSData *data = UIImageJPEGRepresentation(image,0.5);
+        if (operation.downloadCompleteBlock) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                operation.downloadCompleteBlock([UIImage imageWithData:data]);
+            });
+        }
+        // 保存下图片
+        dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [[CYImageCache shareInstance] saveImageCacheToMemoryWithData:data forKey:operation.image_url.absoluteString];
+            if (operation.options != CYWebImageOptionCacheMemoryOnly) {
+                [[CYImageCache shareInstance] saveImageCacheToDiskWithData:data forKey:operation.image_url.absoluteString];
+            }
+            [self.opeartionQueues removeObjectForKey:operation.image_url.absoluteString];
         });
     }
-    // 保存下图片
-    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [[CYImageCache shareInstance] saveImageCacheToMemoryWithData:data forKey:operation.image_url.absoluteString];
-        if (operation.options != CYWebImageOptionCacheMemoryOnly) {
-            [[CYImageCache shareInstance] saveImageCacheToDiskWithData:data forKey:operation.image_url.absoluteString];
-        }
-        [self.opeartionQueues removeObjectForKey:operation.image_url.absoluteString];
-    });
+    
 }
 
 

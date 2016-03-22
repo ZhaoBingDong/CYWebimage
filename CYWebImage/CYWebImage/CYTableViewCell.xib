@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -29,23 +29,43 @@
                             </mask>
                         </variation>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mc6-jJ-q9t">
-                        <rect key="frame" x="120" y="70" width="60" height="60"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Zr-wS-WQS">
+                        <rect key="frame" x="10" y="10" width="80" height="80"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mc6-jJ-q9t">
+                                <rect key="frame" x="8" y="8" width="60" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="6ZK-hs-Gwt"/>
+                                    <constraint firstAttribute="width" constant="60" id="Dtd-09-41t"/>
+                                    <constraint firstAttribute="height" constant="60" id="P2a-mz-JEN"/>
+                                    <constraint firstAttribute="width" constant="60" id="kdz-pO-SQ5"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Dtd-09-41t"/>
+                                        <exclude reference="P2a-mz-JEN"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="60" id="Dtd-09-41t"/>
-                            <constraint firstAttribute="height" constant="60" id="P2a-mz-JEN"/>
+                            <constraint firstAttribute="height" constant="80" id="70G-eP-GUe"/>
+                            <constraint firstItem="mc6-jJ-q9t" firstAttribute="top" secondItem="1Zr-wS-WQS" secondAttribute="top" constant="8" id="Nmg-EU-XlD"/>
+                            <constraint firstItem="mc6-jJ-q9t" firstAttribute="leading" secondItem="1Zr-wS-WQS" secondAttribute="leading" constant="8" id="WOp-5a-QeR"/>
+                            <constraint firstAttribute="width" constant="80" id="Xho-d3-aFR"/>
                         </constraints>
-                    </imageView>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="YK2-jr-lNa" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="Aj0-Ax-HJM"/>
                     <constraint firstItem="YK2-jr-lNa" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="GpZ-qa-bN2"/>
-                    <constraint firstItem="mc6-jJ-q9t" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Iyl-7g-cEa"/>
                     <constraint firstAttribute="bottom" secondItem="YK2-jr-lNa" secondAttribute="bottom" id="MyR-qm-zlk"/>
                     <constraint firstAttribute="trailing" secondItem="YK2-jr-lNa" secondAttribute="trailing" id="NLa-8P-Sba"/>
-                    <constraint firstItem="mc6-jJ-q9t" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="bN1-Fs-Aif"/>
+                    <constraint firstItem="1Zr-wS-WQS" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="Ok6-AB-B8A"/>
                     <constraint firstItem="YK2-jr-lNa" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="d4A-XX-SKy"/>
                     <constraint firstItem="YK2-jr-lNa" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="qK0-eR-dgD"/>
+                    <constraint firstItem="1Zr-wS-WQS" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="xAD-FI-MFB"/>
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">

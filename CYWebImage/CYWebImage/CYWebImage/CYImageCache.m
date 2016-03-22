@@ -102,7 +102,7 @@
  */
 - (void)cache:(NSCache *)cache willEvictObject:(id)obj
 {
-//    NSLog(@"----%p",obj);
+    //    NSLog(@"----%p",obj);
     
 }
 

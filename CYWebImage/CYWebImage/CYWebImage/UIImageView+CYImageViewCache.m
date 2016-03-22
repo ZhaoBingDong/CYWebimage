@@ -49,7 +49,8 @@
  *  @param placeHolder 占位图片
  *  @param complete    完成后的回调
  */
-- (void)cyImageWithURL:(NSURL *_Nullable)url  option:(NSInteger)option placeHolder:(UIImage *_Nullable)placeHolder completeBlock:(nullable void (^)(UIImage * _Nullable image))complete{
+- (void)cyImageWithURL:(NSURL *_Nullable)url  option:(NSInteger)option placeHolder:(UIImage *_Nullable)placeHolder completeBlock:(nullable void (^)(UIImage * _Nullable image))complete {
+    
     [self cyImageWithURL:url option:option placeHolder:placeHolder progress:nil completeBlock:complete];
 }
 
@@ -63,9 +64,13 @@
  *  @param complete    完成后的回调
  */
 - (void)cyImageWithURL:(NSURL *_Nullable)url  option:(NSInteger)option placeHolder:(UIImage *_Nullable)placeHolder progress:(nullable CYDownloadProgressBlock)progress completeBlock:(nullable void (^)(UIImage * _Nullable image))complete {
+    
     if (placeHolder) {
         self.image = placeHolder;
     }
+    
+    if (!url) return;
+    
     __weak typeof(self)weakSelf = self;
     
     [[CYDownloadManager shareInstance]downImageWitthURL:url options:option progress:^(float receviedSize, float totalSize) {
@@ -73,6 +78,9 @@
             progress(receviedSize,totalSize);
         }
     } completeBlock:^(UIImage * _Nullable image) {
+        if (!image) {
+            image = placeHolder;
+        }
         __strong typeof(weakSelf)strongSelf = weakSelf;
         strongSelf.image = image;
         if (complete) {
