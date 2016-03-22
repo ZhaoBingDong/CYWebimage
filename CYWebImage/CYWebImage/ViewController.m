@@ -84,6 +84,8 @@
 //    [cell.cyImagreView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"huluw"]];
     
     
+    [cell.roundImageView setRoundImageWithURL:url placeHoder:[UIImage imageNamed:@"huluw"]];
+    
     
     return cell;
 }

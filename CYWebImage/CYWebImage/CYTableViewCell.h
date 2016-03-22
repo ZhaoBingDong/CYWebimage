@@ -13,4 +13,5 @@
 @property (weak, nonatomic) IBOutlet UIImageView *cyImagreView;
 
 
+@property (weak, nonatomic) IBOutlet UIImageView *roundImageView;
 @end

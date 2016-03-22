@@ -15,7 +15,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YK2-jr-lNa">
-                        <rect key="frame" x="0.0" y="0.0" width="300" height="199.5"/>
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="200"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="60" id="H6h-jx-jYB"/>
                             <constraint firstAttribute="width" constant="60" id="i0s-21-5PY"/>
@@ -29,12 +29,21 @@
                             </mask>
                         </variation>
                     </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mc6-jJ-q9t">
+                        <rect key="frame" x="120" y="70" width="60" height="60"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="Dtd-09-41t"/>
+                            <constraint firstAttribute="height" constant="60" id="P2a-mz-JEN"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="YK2-jr-lNa" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="Aj0-Ax-HJM"/>
                     <constraint firstItem="YK2-jr-lNa" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="GpZ-qa-bN2"/>
+                    <constraint firstItem="mc6-jJ-q9t" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Iyl-7g-cEa"/>
                     <constraint firstAttribute="bottom" secondItem="YK2-jr-lNa" secondAttribute="bottom" id="MyR-qm-zlk"/>
                     <constraint firstAttribute="trailing" secondItem="YK2-jr-lNa" secondAttribute="trailing" id="NLa-8P-Sba"/>
+                    <constraint firstItem="mc6-jJ-q9t" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="bN1-Fs-Aif"/>
                     <constraint firstItem="YK2-jr-lNa" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="d4A-XX-SKy"/>
                     <constraint firstItem="YK2-jr-lNa" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="qK0-eR-dgD"/>
                 </constraints>
@@ -47,6 +56,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="cyImagreView" destination="YK2-jr-lNa" id="Bab-hc-UI1"/>
+                <outlet property="roundImageView" destination="mc6-jJ-q9t" id="aG9-Sv-Sos"/>
             </connections>
             <point key="canvasLocation" x="203" y="177"/>
         </tableViewCell>
